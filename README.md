@@ -39,7 +39,7 @@ SurePay/
 │   └── validators/
 │       └── EmailValidator.js           # Email format validation
 ├── tests/
-│   ├── api-workflow.test.js            # Test suite (12 tests)
+│   ├── api-workflow.test.js            # Test suite (13 tests)
 │   ├── config/
 │   │   └── test-config.js              # Test configuration
 │   ├── fixtures/
@@ -122,8 +122,65 @@ The project uses Circle CI to automatically:
 1. Lint code (`npm run lint`)
 2. Check formatting (`npm run format:check`)
 3. Run tests (`npm test`)
+4. Store test artifacts (HTML reports)
 
 All checks must pass before code is considered valid.
+
+#### Setting Up Circle CI
+
+1. **Connect your GitHub repository to Circle CI:**
+   - Go to https://circleci.com
+   - Click "Sign up" and authorize with GitHub
+   - Select your organization and repository
+   - Circle CI automatically detects `.circleci/config.yml`
+
+2. **View CI Pipeline:**
+   - Circle CI automatically runs on every push and pull request
+   - View status in the "Checks" section of your GitHub commit
+   - Access full pipeline logs at https://app.circleci.com
+
+3. **Monitor Test Reports:**
+   - Test HTML reports are stored as artifacts after each run
+   - Download from Circle CI "Artifacts" tab
+   - View consolidated test results with execution times
+
+#### Running CI Locally (Optional)
+
+To test the full CI pipeline on your machine before pushing:
+
+```bash
+# Install Circle CI CLI
+curl https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | bash
+
+# Validate your CI config
+circleci config validate
+
+# Run the pipeline locally (Docker required)
+circleci local execute --job test
+```
+
+#### Understanding CI Workflow
+
+The `.circleci/config.yml` defines:
+
+- **Docker Image:** `circleci/node:14` - Node.js 14 environment
+- **Jobs:** Single `test` job that:
+  - Checks out code
+  - Installs dependencies
+  - Runs linting
+  - Checks code formatting
+  - Executes all 13 tests
+  - Stores test reports as artifacts
+- **Workflows:** `test_workflow` runs on every push
+
+#### CI Failure Troubleshooting
+
+If CI fails:
+
+1. **Lint errors:** Run `npm run lint:fix` locally and push
+2. **Format errors:** Run `npm run format` locally and push
+3. **Test failures:** Run `npm test` locally to debug, then push
+4. **Dependency issues:** Clear cache in Circle CI project settings
 
 ### Expected Output
 
@@ -334,8 +391,8 @@ npm test
 
 **Status:** ✅ PASSING
 
-- Total Tests: 12
-- Passed: 12 ✅
+- Total Tests: 13
+- Passed: 13 ✅
 - Failed: 0 ✅
 - Execution Time: ~2-5 seconds
 - **Defects Found:** 0
