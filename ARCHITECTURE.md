@@ -1,6 +1,7 @@
 # SurePay - Project Architecture
 
 ## Overview
+
 SurePay is a test automation framework for blog APIs with email validation. The project is designed to be **framework-agnostic** and **lean**, allowing easy migration to different testing tools (Jest → Playwright) without code duplication.
 
 ## Project Structure
@@ -40,15 +41,18 @@ SurePay/
 ## Key Design Decisions
 
 ### 1. **Separation of Concerns**
+
 - **`src/`** - Pure business logic, zero testing framework dependencies
 - **`tests/`** - Testing code split into configuration, fixtures, and helpers
 
 ### 2. **Framework Agnostic**
+
 - Core repositories and services work with any testing framework
 - Test helpers initialize dependencies without coupling to Jest
 - No Jest-specific code in business logic
 
 ### 3. **Lean Architecture**
+
 - No unnecessary abstractions
 - Minimal folder structure
 - Single responsibility per class
@@ -57,6 +61,7 @@ SurePay/
 ## How to Extend with Playwright
 
 ### Step 1: Create Playwright Tests
+
 ```
 tests/
 ├── e2e/
@@ -64,6 +69,7 @@ tests/
 ```
 
 ### Step 2: Reuse Core Logic
+
 ```javascript
 // tests/e2e/blog-ui.spec.js
 const testHelpers = require('../helpers/test-helpers');
@@ -82,11 +88,13 @@ test('UI: User can view blog posts', async ({ page }) => {
 ```
 
 ### Step 3: Install Playwright
+
 ```bash
 npm install -D @playwright/test
 ```
 
 ### Step 4: Run Both Test Suites
+
 ```bash
 npm run test:jest      # Jest API tests
 npm run test:playwright # Playwright E2E tests
@@ -96,6 +104,7 @@ npm run test:all       # Both
 ## Test Coverage
 
 ### API Tests (Jest)
+
 - **Happy Path**: Complete workflow validation
 - **Error Scenarios**: Invalid inputs, missing data
 - **Edge Cases**: Null/undefined, special characters, boundaries
@@ -107,11 +116,13 @@ npm run test:all       # Both
 ## Adding New Tests
 
 ### For Jest (API Tests)
+
 1. Add test data to `tests/fixtures/test-data.js`
 2. Use test helpers from `tests/helpers/test-helpers.js`
 3. Add test to `tests/api-workflow.test.js`
 
 ### For Playwright (UI Tests)
+
 1. Reuse test data from `tests/fixtures/test-data.js`
 2. Reuse initialization from `tests/helpers/test-helpers.js`
 3. Create new `.spec.js` files in `tests/e2e/`
@@ -119,17 +130,20 @@ npm run test:all       # Both
 ## Configuration
 
 ### Test Config (`tests/config/test-config.js`)
+
 - API base URL
 - Timeout settings
 - Common test data keys
 
 ### Test Fixtures (`tests/fixtures/test-data.js`)
+
 - Valid/invalid email examples
 - Valid/invalid usernames
 - Test IDs
 - Edge case values
 
 ### Test Helpers (`tests/helpers/test-helpers.js`)
+
 - `initializeTestEnvironment()` - Setup all dependencies
 - `createApiClient()` - Create HTTP client
 - `createRepositories()` - Create data access layer

@@ -4,7 +4,7 @@ class ApiClient {
   constructor(baseURL) {
     this.client = axios.create({
       baseURL,
-      timeout: 10000
+      timeout: 10000,
     });
   }
 

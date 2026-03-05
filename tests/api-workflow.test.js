@@ -35,9 +35,7 @@ describe('Blog Workflow - User Comments Email Validation', () => {
     });
 
     test('should throw error for invalid username input', async () => {
-      await expect(
-        userRepository.getUserByUsername(null)
-      ).rejects.toThrow();
+      await expect(userRepository.getUserByUsername(null)).rejects.toThrow();
     });
   });
 
@@ -49,7 +47,7 @@ describe('Blog Workflow - User Comments Email Validation', () => {
       expect(posts).toBeDefined();
       expect(Array.isArray(posts)).toBe(true);
       expect(posts.length).toBeGreaterThan(0);
-      posts.forEach(post => {
+      posts.forEach((post) => {
         expect(post.id).toBeDefined();
         expect(post.userId).toBe(user.id);
         expect(post.title).toBeDefined();
@@ -58,15 +56,13 @@ describe('Blog Workflow - User Comments Email Validation', () => {
     });
 
     test('should throw error when user has no posts', async () => {
-      await expect(
-        postRepository.getPostsByUserId(99999)
-      ).rejects.toThrow('No posts found');
+      await expect(postRepository.getPostsByUserId(99999)).rejects.toThrow(
+        'No posts found'
+      );
     });
 
     test('should throw error for invalid user ID', async () => {
-      await expect(
-        postRepository.getPostsByUserId(null)
-      ).rejects.toThrow();
+      await expect(postRepository.getPostsByUserId(null)).rejects.toThrow();
     });
   });
 
@@ -80,7 +76,7 @@ describe('Blog Workflow - User Comments Email Validation', () => {
         expect(comments).toBeDefined();
         expect(Array.isArray(comments)).toBe(true);
         expect(comments.length).toBeGreaterThan(0);
-        comments.forEach(comment => {
+        comments.forEach((comment) => {
           expect(comment.id).toBeDefined();
           expect(comment.postId).toBe(post.id);
           expect(comment.email).toBeDefined();
@@ -114,7 +110,7 @@ describe('Blog Workflow - User Comments Email Validation', () => {
       expect(Array.isArray(result.posts)).toBe(true);
       expect(result.posts.length).toBeGreaterThan(0);
 
-      result.posts.forEach(post => {
+      result.posts.forEach((post) => {
         expect(post.postId).toBeDefined();
         expect(post.postTitle).toBeDefined();
         expect(post.commentCount).toBeGreaterThan(0);
@@ -135,10 +131,7 @@ describe('Blog Workflow - User Comments Email Validation', () => {
     });
 
     test('should throw error for null username in workflow', async () => {
-      await expect(
-        workflow.validateUserCommentsEmails(null)
-      ).rejects.toThrow();
+      await expect(workflow.validateUserCommentsEmails(null)).rejects.toThrow();
     });
   });
-
 });

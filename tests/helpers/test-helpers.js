@@ -24,7 +24,7 @@ function createRepositories(apiClient) {
   return {
     user: new UserRepository(apiClient),
     post: new PostRepository(apiClient),
-    comment: new CommentRepository(apiClient)
+    comment: new CommentRepository(apiClient),
   };
 }
 
@@ -50,7 +50,7 @@ function initializeTestEnvironment(baseURL = testConfig.api.baseURL) {
     workflow,
     userRepository: repositories.user,
     postRepository: repositories.post,
-    commentRepository: repositories.comment
+    commentRepository: repositories.comment,
   };
 }
 
@@ -58,5 +58,5 @@ module.exports = {
   createApiClient,
   createRepositories,
   createWorkflow,
-  initializeTestEnvironment
+  initializeTestEnvironment,
 };

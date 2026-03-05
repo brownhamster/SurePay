@@ -4,7 +4,12 @@ class CommentRepository {
   }
 
   async getCommentsByPostId(postId) {
-    if (postId === null || postId === undefined || typeof postId !== 'number' || postId <= 0) {
+    if (
+      postId === null ||
+      postId === undefined ||
+      typeof postId !== 'number' ||
+      postId <= 0
+    ) {
       throw new Error('Invalid post ID: must be a positive number');
     }
 

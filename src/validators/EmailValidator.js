@@ -20,7 +20,12 @@ class EmailValidator {
     const [localPart, domain] = parts;
 
     // Local part validation
-    if (!localPart || localPart.length === 0 || localPart.startsWith('.') || localPart.endsWith('.')) {
+    if (
+      !localPart ||
+      localPart.length === 0 ||
+      localPart.startsWith('.') ||
+      localPart.endsWith('.')
+    ) {
       return false;
     }
 
@@ -53,10 +58,10 @@ class EmailValidator {
   static validateEmailList(emails) {
     const results = {
       valid: [],
-      invalid: []
+      invalid: [],
     };
 
-    emails.forEach(email => {
+    emails.forEach((email) => {
       if (this.isValidEmail(email)) {
         results.valid.push(email);
       } else {

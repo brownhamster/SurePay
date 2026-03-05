@@ -5,6 +5,7 @@ A robust test automation framework for the JSONPlaceholder Blog API, specificall
 ## Overview
 
 This framework tests the following workflow:
+
 1. Search for a user by username (e.g., "Delphine")
 2. Retrieve all posts created by that user
 3. Fetch comments for each post
@@ -45,6 +46,7 @@ SurePay/
 ## Installation
 
 ### Prerequisites
+
 - Node.js >= 14.0.0
 - npm >= 6.0.0
 
@@ -61,21 +63,25 @@ npm install
 ## Running Tests
 
 ### Run All Tests
+
 ```bash
 npm test
 ```
 
 ### Watch Mode (re-run on file changes)
+
 ```bash
 npm run test:watch
 ```
 
 ### Generate Coverage Report
+
 ```bash
 npm run test:coverage
 ```
 
 ### Expected Output
+
 ```
 PASS tests/blog-workflow.test.js
   Blog Workflow - User Comments Email Validation
@@ -96,20 +102,22 @@ Tests:       19 passed, 19 total
 
 ## Test Coverage
 
-| Metric | Coverage |
-|--------|----------|
-| Statements | 81.96% |
-| Branches | 75% |
-| Functions | 77.77% |
-| Lines | 81.66% |
+| Metric     | Coverage |
+| ---------- | -------- |
+| Statements | 81.96%   |
+| Branches   | 75%      |
+| Functions  | 77.77%   |
+| Lines      | 81.66%   |
 
 **Critical modules at 100% coverage:**
+
 - BlogWorkflow.js (100%)
 - EmailValidator.js (100%)
 
 ## Test Scenarios
 
 ### Happy Path (5 tests)
+
 - ✅ User lookup by username
 - ✅ Post retrieval for user
 - ✅ Comment retrieval for posts
@@ -117,18 +125,21 @@ Tests:       19 passed, 19 total
 - ✅ Email format verification
 
 ### Error Handling (4 tests)
+
 - ✅ Non-existent user handling
 - ✅ Invalid user ID handling
 - ✅ Empty result sets
 - ✅ Network errors
 
 ### Validation & Data Integrity (7 tests)
+
 - ✅ Email format validation (valid & invalid patterns)
 - ✅ API response schema validation
 - ✅ Data relationship verification
 - ✅ Null/undefined handling
 
 ### Edge Cases (3 tests)
+
 - ✅ Subdomains in emails
 - ✅ Plus addressing in emails
 - ✅ Multiple TLDs (.com, .org, .co.uk, etc.)
@@ -136,18 +147,27 @@ Tests:       19 passed, 19 total
 ## Architecture & Design Patterns
 
 ### Repository Pattern
+
 Abstracts data access logic, making the code testable and maintainable:
+
 ```javascript
 const user = await userRepository.getUserByUsername('Delphine');
 ```
 
 ### Dependency Injection
+
 Dependencies are passed through constructors:
+
 ```javascript
-const workflow = new BlogWorkflow(userRepository, postRepository, commentRepository);
+const workflow = new BlogWorkflow(
+  userRepository,
+  postRepository,
+  commentRepository
+);
 ```
 
 ### Single Responsibility Principle
+
 - ApiClient: HTTP communication
 - Repositories: Data retrieval
 - EmailValidator: Validation logic
@@ -164,12 +184,14 @@ The framework tests against JSONPlaceholder endpoints:
 ## Email Validation Rules
 
 Valid formats:
+
 - `test@example.com`
 - `user.name@domain.co.uk`
 - `support+tag@service.com`
 - `info@company.org`
 
 Invalid formats:
+
 - Missing local or domain part
 - Spaces in email
 - Missing TLD
@@ -216,12 +238,15 @@ main().catch(console.error);
 ## Troubleshooting
 
 ### Tests Timeout
+
 If tests are timing out:
+
 1. Check your internet connection
 2. Verify JSONPlaceholder API is accessible
 3. Increase Jest timeout in `jest.config.js`
 
 ### Installation Issues
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
@@ -229,7 +254,9 @@ npm install
 ```
 
 ### Module Not Found
+
 Ensure you're in the correct directory:
+
 ```bash
 cd SurePay
 npm install
@@ -249,14 +276,14 @@ npm test
 
 ## Performance Metrics
 
-| Test Group | Duration | Tests |
-|------------|----------|-------|
-| Happy Path | ~2.4s | 5 |
-| Error Scenarios | ~0.5s | 4 |
-| Email Validator | ~0.003s | 3 |
-| API Client | ~0.45s | 2 |
-| Response Validation | ~0.27s | 3 |
-| Data Integrity | ~1.6s | 2 |
+| Test Group          | Duration | Tests |
+| ------------------- | -------- | ----- |
+| Happy Path          | ~2.4s    | 5     |
+| Error Scenarios     | ~0.5s    | 4     |
+| Email Validator     | ~0.003s  | 3     |
+| API Client          | ~0.45s   | 2     |
+| Response Validation | ~0.27s   | 3     |
+| Data Integrity      | ~1.6s    | 2     |
 
 ## Requirements Met
 

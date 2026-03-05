@@ -14,12 +14,14 @@ class BlogWorkflow {
 
     const results = {
       user,
-      posts: []
+      posts: [],
     };
 
     for (const post of posts) {
-      const comments = await this.commentRepository.getCommentsByPostId(post.id);
-      const emails = comments.map(comment => comment.email);
+      const comments = await this.commentRepository.getCommentsByPostId(
+        post.id
+      );
+      const emails = comments.map((comment) => comment.email);
       const validation = EmailValidator.validateEmailList(emails);
 
       results.posts.push({
@@ -29,8 +31,8 @@ class BlogWorkflow {
         emails: {
           total: emails.length,
           valid: validation.valid,
-          invalid: validation.invalid
-        }
+          invalid: validation.invalid,
+        },
       });
     }
 

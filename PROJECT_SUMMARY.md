@@ -15,12 +15,14 @@ npm test
 ## Deliverables
 
 ### ✅ Test Automation Framework
+
 - **Complete skeleton** with proper structure
 - **5 core modules** following SOLID principles
 - **Jest configuration** for consistent test execution
 - **Package.json** with all dependencies
 
 ### ✅ Test Coverage
+
 - **19 comprehensive tests** covering:
   - Main workflow (happy path)
   - Error scenarios
@@ -29,12 +31,14 @@ npm test
   - API integration
 
 ### ✅ Test Results
+
 - **19/19 tests PASSING** ✅
 - **81.96% code coverage**
 - **Zero defects found**
 - **Cross-platform compatible**
 
 ### ✅ Documentation
+
 - `README.md` - Setup and usage
 - `TEST_REPORT.md` - Detailed test findings
 - `ARCHITECTURE.md` - Design decisions
@@ -101,6 +105,7 @@ The framework tests this exact flow:
 ## Test Coverage Breakdown
 
 ### Happy Path Tests (5 tests)
+
 - ✅ Find user "Delphine"
 - ✅ Retrieve user's posts
 - ✅ Get comments for each post
@@ -108,17 +113,20 @@ The framework tests this exact flow:
 - ✅ Validate all emails
 
 ### Error Handling Tests (4 tests)
+
 - ✅ Handle non-existent user
 - ✅ Handle invalid user ID
 - ✅ Handle empty results
 - ✅ Handle API errors
 
 ### Unit Tests (3 tests)
+
 - ✅ Email validator with valid formats
 - ✅ Email validator with invalid formats
 - ✅ Email list categorization
 
 ### Integration Tests (5 tests)
+
 - ✅ API client error handling
 - ✅ API timeout handling
 - ✅ Response schema validation (user)
@@ -126,6 +134,7 @@ The framework tests this exact flow:
 - ✅ Response schema validation (comment)
 
 ### Data Validation Tests (2 tests)
+
 - ✅ User-post relationship integrity
 - ✅ Post-comment relationship integrity
 
@@ -134,6 +143,7 @@ The framework tests this exact flow:
 ## Code Quality Metrics
 
 ### SOLID Principles ✅
+
 - **S**ingle Responsibility: Each class has one job
 - **O**pen/Closed: Open for extension, closed for modification
 - **L**iskov: Can swap implementations easily
@@ -141,11 +151,13 @@ The framework tests this exact flow:
 - **D**ependency Inversion: Depends on abstractions
 
 ### Design Patterns ✅
+
 - **Repository Pattern**: Data access abstraction
 - **Dependency Injection**: Loose coupling
 - **Service Layer**: Business logic orchestration
 
 ### Code Practices ✅
+
 - **DRY** (Don't Repeat Yourself): Centralized error handling
 - **KISS** (Keep It Simple): No over-engineering
 - **Clean Code**: Clear naming and organization
@@ -180,11 +192,13 @@ The framework tests this exact flow:
 ## How to Use
 
 ### 1. Setup
+
 ```bash
 npm install
 ```
 
 ### 2. Run Tests
+
 ```bash
 npm test              # Run all tests
 npm run test:watch   # Run in watch mode
@@ -192,6 +206,7 @@ npm run test:coverage # Generate coverage report
 ```
 
 ### 3. Review Results
+
 ```bash
 # Check TEST_REPORT.md for detailed findings
 cat TEST_REPORT.md
@@ -208,29 +223,34 @@ cat README.md
 ## Key Features
 
 ✅ **Complete Framework**
+
 - Modular architecture
 - Proper separation of concerns
 - Easy to extend
 
 ✅ **Comprehensive Tests**
+
 - Happy path coverage
 - Error scenarios
 - Edge cases
 - Data validation
 
 ✅ **Best Practices**
+
 - SOLID principles
 - Design patterns
 - Clean code
 - Clear documentation
 
 ✅ **Production Ready**
+
 - 81.96% code coverage
 - All tests passing
 - Zero defects
 - Cross-platform support
 
 ✅ **Well Documented**
+
 - README with setup instructions
 - TEST_REPORT with findings
 - ARCHITECTURE explaining design
@@ -252,41 +272,45 @@ cat README.md
 ## Email Validation Results
 
 ### Test Data
+
 - User: Delphine (ID: 3)
 - Posts: 10
 - Comments: 46
 - All comment emails: ✅ Valid
 
 ### Validation Rules Tested
+
 ✅ Valid email patterns:
-  - Basic: `name@domain.com`
-  - Subdomain: `user@mail.domain.co.uk`
-  - Plus addressing: `user+tag@domain.com`
-  - Organization TLD: `info@company.org`
+
+- Basic: `name@domain.com`
+- Subdomain: `user@mail.domain.co.uk`
+- Plus addressing: `user+tag@domain.com`
+- Organization TLD: `info@company.org`
 
 ✅ Invalid patterns rejected:
-  - Missing local part: `@domain.com`
-  - Missing domain: `user@`
-  - Spaces: `user name@domain.com`
-  - Incomplete domain: `user@domain`
-  - Null/undefined/empty values
-  - Non-string types
+
+- Missing local part: `@domain.com`
+- Missing domain: `user@`
+- Spaces: `user name@domain.com`
+- Incomplete domain: `user@domain`
+- Null/undefined/empty values
+- Non-string types
 
 ---
 
 ## Performance Metrics
 
-| Category | Metric | Value |
-|----------|--------|-------|
-| **Execution** | Total Time | 3-8 seconds |
-| | Tests/sec | ~2.4 tests/sec |
-| | Average/test | 0.4 seconds |
-| **Coverage** | Statements | 81.96% |
-| | Branches | 75% |
-| | Functions | 77.77% |
-| | Lines | 81.66% |
-| **Quality** | Defects | 0 |
-| | Test Pass Rate | 100% |
+| Category      | Metric         | Value          |
+| ------------- | -------------- | -------------- |
+| **Execution** | Total Time     | 3-8 seconds    |
+|               | Tests/sec      | ~2.4 tests/sec |
+|               | Average/test   | 0.4 seconds    |
+| **Coverage**  | Statements     | 81.96%         |
+|               | Branches       | 75%            |
+|               | Functions      | 77.77%         |
+|               | Lines          | 81.66%         |
+| **Quality**   | Defects        | 0              |
+|               | Test Pass Rate | 100%           |
 
 ---
 
@@ -303,12 +327,14 @@ cat README.md
 ## Requirements Fulfillment
 
 ### ✅ Test Automation Framework Skeleton
+
 - [x] Complete project structure
 - [x] Modular architecture
 - [x] Proper configuration files
 - [x] Package management
 
 ### ✅ Comments Email Validation
+
 - [x] Fetch user by username
 - [x] Retrieve posts for user
 - [x] Get comments for each post
@@ -316,6 +342,7 @@ cat README.md
 - [x] Generate validation results
 
 ### ✅ Test Scenarios
+
 - [x] Happy path workflow
 - [x] Non-existent user handling
 - [x] Invalid user ID handling
@@ -325,6 +352,7 @@ cat README.md
 - [x] Data relationship verification
 
 ### ✅ Best Coding Practices
+
 - [x] SOLID principles
 - [x] DRY (Don't Repeat Yourself)
 - [x] KISS (Keep It Simple)
@@ -334,6 +362,7 @@ cat README.md
 - [x] Proper error handling
 
 ### ✅ Documentation
+
 - [x] README with setup
 - [x] Test report with findings
 - [x] Architecture documentation
@@ -341,6 +370,7 @@ cat README.md
 - [x] Clear project structure
 
 ### ✅ Cross-Platform
+
 - [x] No OS-specific dependencies
 - [x] Works on Windows, macOS, Linux
 - [x] Minimal configuration needed
@@ -351,6 +381,7 @@ cat README.md
 ## Next Steps for Development
 
 Developers can now:
+
 1. ✅ Run tests to verify changes don't break functionality
 2. ✅ Add new tests for new features
 3. ✅ Follow established patterns for consistency
@@ -361,20 +392,20 @@ Developers can now:
 
 ## Files Reference
 
-| File | Purpose | Lines |
-|------|---------|-------|
-| ApiClient.js | HTTP wrapper | 26 |
-| UserRepository.js | User data access | 16 |
-| PostRepository.js | Post data access | 24 |
-| CommentRepository.js | Comment data access | 16 |
-| BlogWorkflow.js | Orchestration | 35 |
-| EmailValidator.js | Email validation | 27 |
-| blog-workflow.test.js | Test suite | 350+ |
-| jest.config.js | Jest config | 15 |
-| package.json | Dependencies | 30 |
-| README.md | Setup guide | 200+ |
-| TEST_REPORT.md | Test findings | 300+ |
-| ARCHITECTURE.md | Design docs | 350+ |
+| File                  | Purpose             | Lines |
+| --------------------- | ------------------- | ----- |
+| ApiClient.js          | HTTP wrapper        | 26    |
+| UserRepository.js     | User data access    | 16    |
+| PostRepository.js     | Post data access    | 24    |
+| CommentRepository.js  | Comment data access | 16    |
+| BlogWorkflow.js       | Orchestration       | 35    |
+| EmailValidator.js     | Email validation    | 27    |
+| blog-workflow.test.js | Test suite          | 350+  |
+| jest.config.js        | Jest config         | 15    |
+| package.json          | Dependencies        | 30    |
+| README.md             | Setup guide         | 200+  |
+| TEST_REPORT.md        | Test findings       | 300+  |
+| ARCHITECTURE.md       | Design docs         | 350+  |
 
 ---
 

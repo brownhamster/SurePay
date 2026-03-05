@@ -6,14 +6,14 @@
 const config = {
   api: {
     baseURL: 'https://jsonplaceholder.typicode.com',
-    timeout: 10000
+    timeout: 10000,
   },
   testData: {
     users: {
       valid: 'Delphine',
-      invalid: 'NonExistentUserXYZ123'
-    }
-  }
+      invalid: 'NonExistentUserXYZ123',
+    },
+  },
 };
 
 module.exports = config;

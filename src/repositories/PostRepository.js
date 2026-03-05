@@ -4,7 +4,12 @@ class PostRepository {
   }
 
   async getPostsByUserId(userId) {
-    if (userId === null || userId === undefined || typeof userId !== 'number' || userId <= 0) {
+    if (
+      userId === null ||
+      userId === undefined ||
+      typeof userId !== 'number' ||
+      userId <= 0
+    ) {
       throw new Error('Invalid user ID: must be a positive number');
     }
 

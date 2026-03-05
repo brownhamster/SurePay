@@ -11,7 +11,7 @@ const testEmails = {
     'support+tag@service.com',
     'user_name@test.com',
     'user-name@test.com',
-    'user123@test.com'
+    'user123@test.com',
   ],
   invalid: [
     'notanemail',
@@ -24,7 +24,7 @@ const testEmails = {
     'user@localhost',
     '.@example.com',
     'user@.com',
-    'user@@example.com'
+    'user@@example.com',
   ],
   edge: {
     null: null,
@@ -32,8 +32,8 @@ const testEmails = {
     number: 12345,
     boolean: true,
     object: {},
-    array: ['user@example.com']
-  }
+    array: ['user@example.com'],
+  },
 };
 
 const testUsernames = {
@@ -46,14 +46,14 @@ const testUsernames = {
     undefined: undefined,
     number: 12345,
     specialChars: 'User@123!#',
-    caseSensitive: 'delphine'
-  }
+    caseSensitive: 'delphine',
+  },
 };
 
 const testIds = {
   valid: {
     userId: 1,
-    postId: 1
+    postId: 1,
   },
   invalid: {
     null: null,
@@ -61,12 +61,12 @@ const testIds = {
     zero: 0,
     negative: -1,
     string: 'invalid',
-    largeNumber: 99999
-  }
+    largeNumber: 99999,
+  },
 };
 
 module.exports = {
   testEmails,
   testUsernames,
-  testIds
+  testIds,
 };
