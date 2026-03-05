@@ -1,9 +1,25 @@
+/**
+ * Post Repository
+ * Handles all post-related data access operations
+ * Abstracts API calls and provides a clean interface for retrieving post data
+ */
 class PostRepository {
+  /**
+   * Initialize the repository with an API client
+   * @param {ApiClient} apiClient - The HTTP API client instance
+   */
   constructor(apiClient) {
     this.apiClient = apiClient;
   }
 
+  /**
+   * Get all posts created by a specific user
+   * @param {number} userId - The ID of the user
+   * @returns {Promise<Array>} Array of post objects for the user
+   * @throws {Error} If userId is invalid or no posts found
+   */
   async getPostsByUserId(userId) {
+    // Validate input: must be a positive number
     if (
       userId === null ||
       userId === undefined ||
@@ -13,8 +29,10 @@ class PostRepository {
       throw new Error('Invalid user ID: must be a positive number');
     }
 
+    // Query the API for posts by user ID
     const posts = await this.apiClient.get('/posts', { userId });
 
+    // Check if posts were found
     if (!posts || posts.length === 0) {
       throw new Error(`No posts found for user ID "${userId}"`);
     }
@@ -22,6 +40,12 @@ class PostRepository {
     return posts;
   }
 
+  /**
+   * Get a single post by ID
+   * @param {number} postId - The ID of the post
+   * @returns {Promise<object>} Post object with id, userId, title, body
+   * @throws {Error} If post not found
+   */
   async getPostById(postId) {
     const posts = await this.apiClient.get('/posts', { id: postId });
 
