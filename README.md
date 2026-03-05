@@ -1,4 +1,4 @@
-# Blog API Test Automation Framework
+# API Test Automation Framework
 
 A robust test automation framework for the JSONPlaceholder Blog API, specifically designed to validate user comment email formats and ensure data integrity.
 

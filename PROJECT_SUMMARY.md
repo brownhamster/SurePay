@@ -1,4 +1,4 @@
-# Project Summary - Blog API Test Automation Framework
+# Project Summary - API Test Automation Framework
 
 ## Quick Start
 

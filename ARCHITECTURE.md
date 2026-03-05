@@ -1,4 +1,4 @@
-# SurePay - Project Architecture
+# API Test Framework - Project Architecture
 
 ## Overview
 
