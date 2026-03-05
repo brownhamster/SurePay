@@ -187,6 +187,7 @@ npm test
 ```
 
 The test report includes:
+
 - **Execution Summary** - Total tests, passed, failed, skipped
 - **Test Details** - Individual test results with execution time
 - **Coverage Metrics** - Code coverage percentages

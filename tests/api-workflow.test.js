@@ -3,9 +3,7 @@ const testHelpers = require('./helpers/test-helpers');
 const testConfig = require('./config/test-config');
 const ApiClient = require('../src/api/ApiClient');
 const UserRepository = require('../src/repositories/UserRepository');
-const PostRepository = require('../src/repositories/PostRepository');
 const CommentRepository = require('../src/repositories/CommentRepository');
-const BlogWorkflow = require('../src/services/BlogWorkflow');
 
 const API_BASE_URL = testConfig.api.baseURL;
 
@@ -197,6 +195,7 @@ describe('API Workflow - User Comments Email Validation', () => {
       });
 
       // Log concurrent execution time for performance baseline
+      // eslint-disable-next-line no-console
       console.log(`Concurrent execution time: ${executionTime}ms`);
     });
   });
