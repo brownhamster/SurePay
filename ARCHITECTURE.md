@@ -68,21 +68,25 @@ SurePay/
 ### API Tests (Jest) - 12 Tests Across 4 Flows
 
 **Flow 1: Search for User "Delphine"** (3 tests)
+
 - Happy path: Find user by username
 - Error: User does not exist
 - Error: Invalid username input
 
 **Flow 2: Fetch Posts by User** (3 tests)
+
 - Happy path: Get all posts for user
 - Error: User has no posts
 - Error: Invalid user ID
 
 **Flow 3: Fetch Comments for Each Post** (3 tests)
+
 - Happy path: Get comments for posts
 - Error: Post has no comments
 - Error: Invalid post ID
 
 **Flow 4: Validate Email Format in Comments** (3 tests)
+
 - Happy path: Validate all emails in comments
 - Error: Invalid username in workflow
 - Error: Null username in workflow
@@ -122,18 +126,22 @@ SurePay/
 ## Code Quality & CI/CD
 
 ### ESLint
+
 - Enforces consistent code style
 - Checks for common errors
 - Rules: 2-space indents, single quotes, strict equality, proper curly braces
 - Run: `npm run lint` or `npm run lint:fix` for auto-fixes
 
 ### Prettier
+
 - Auto-formats code for consistency
 - Enforces formatting rules project-wide
 - Run: `npm run format` or `npm run format:check` to verify
 
 ### Circle CI Pipeline
+
 Automated checks on every push:
+
 1. **Lint** - `npm run lint`
 2. **Format** - `npm run format:check`
 3. **Test** - `npm test`
@@ -150,4 +158,3 @@ All checks must pass before code is considered valid.
 ✅ **Framework-agnostic** - Core logic works with any test tool
 ✅ **Code Quality** - ESLint and Prettier ensure consistency
 ✅ **CI/CD** - Automated validation on every push
-

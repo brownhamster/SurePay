@@ -118,6 +118,7 @@ npm run format:check
 ### CI/CD Pipeline
 
 The project uses Circle CI to automatically:
+
 1. Lint code (`npm run lint`)
 2. Check formatting (`npm run format:check`)
 3. Run tests (`npm test`)
@@ -181,6 +182,7 @@ All tests are organized into 4 main flows with 3 tests each (1 happy path + 2 er
 ### Flow-Based Testing Approach
 
 Each flow has:
+
 - **1 Happy Path Test** - Validates the successful workflow
 - **2 Error Scenario Tests** - Tests error handling and edge cases
 
@@ -320,13 +322,13 @@ npm test
 
 ## Performance Metrics
 
-| Metric              | Value |
-| ------------------- | ----- |
-| Total Execution     | 2-5s  |
-| Tests/second        | 2.4   |
-| Average per test    | 0.3s  |
-| Code Style Check    | ✅    |
-| Formatting Check    | ✅    |
+| Metric           | Value |
+| ---------------- | ----- |
+| Total Execution  | 2-5s  |
+| Tests/second     | 2.4   |
+| Average per test | 0.3s  |
+| Code Style Check | ✅    |
+| Formatting Check | ✅    |
 
 ## Requirements Met
 
