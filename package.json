@@ -1,0 +1,25 @@
+{
+  "name": "SurePay",
+  "version": "1.0.0",
+  "description": "Test automation framework for blog API",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "api",
+    "testing",
+    "jest",
+    "axios"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
