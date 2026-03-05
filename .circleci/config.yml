@@ -13,6 +13,14 @@ jobs:
           command: npm install
 
       - run:
+          name: Lint code
+          command: npm run lint
+
+      - run:
+          name: Check code formatting
+          command: npm run format:check
+
+      - run:
           name: Run tests
           command: npm test
 
