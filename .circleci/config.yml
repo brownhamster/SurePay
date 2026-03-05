@@ -16,17 +16,6 @@ jobs:
           name: Run tests
           command: npm test
 
-      - run:
-          name: Generate test report
-          command: npm test -- --coverage || true
-
-      - store_test_results:
-          path: coverage
-
-      - store_artifacts:
-          path: coverage
-          destination: coverage
-
 workflows:
   test_workflow:
     jobs:
