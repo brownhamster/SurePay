@@ -129,7 +129,7 @@ All checks must pass before code is considered valid.
 
 ```
 PASS tests/api-workflow.test.js
-  Blog Workflow - User Comments Email Validation
+  API Workflow - User Comments Email Validation
     Flow 1: Search for user "Delphine"
       ✓ should find user by username "Delphine"
       ✓ should throw error when user does not exist
@@ -353,12 +353,24 @@ npm test
 - Custom Jest reporters
 - Visual regression testing
 
+## Future Capabilities
+
+The framework is built with a **framework-agnostic architecture** that allows seamless extension to Playwright or other testing tools without inflating the current test suite. The core business logic in `src/` (repositories, services, validators) is completely independent of Jest and can be reused with any testing framework. When Playwright E2E tests are added in the future, they will leverage the same test helpers, fixtures, and business logic without duplicating code or adding complexity to the existing Jest tests.
+
+## AI Usage Disclosure
+
+This project was developed with assistance from Claude AI. AI support was used for:
+- Reviewing and improving test logic and coverage
+- Enhancing code structure and design patterns
+- Improving documentation clarity and completeness
+- Adding and fixing ESLint and Prettier configurations
+- Generating JSDoc comments for better code documentation
+
+The core architecture, workflows, and test scenarios were guided by project requirements. All code has been reviewed and verified manually to ensure quality and correctness.
+
 ## Documentation
 
 - **ARCHITECTURE.md** - Design decisions, patterns, and structure
 - **PROJECT_SUMMARY.md** - Complete project overview and metrics
 - **README.md** - This file
 
-## License
-
-MIT
