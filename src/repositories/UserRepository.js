@@ -19,15 +19,12 @@ class UserRepository {
    * @throws {Error} If username is invalid or user not found
    */
   async getUserByUsername(username) {
-    // Validate input
     if (!username || typeof username !== 'string' || username.trim() === '') {
       throw new Error('Invalid username: must be a non-empty string');
     }
 
-    // Query the API for user by username
     const users = await this.apiClient.get('/users', { username });
 
-    // Check if user was found
     if (!users || users.length === 0) {
       throw new Error(`User with username "${username}" not found`);
     }

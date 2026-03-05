@@ -14,19 +14,14 @@ class EmailValidator {
    * @returns {boolean} True if the email is valid, false otherwise
    */
   static isValidEmail(email) {
-    // Check if email exists and is a string
     if (!email || typeof email !== 'string') {
       return false;
     }
 
-    // Email validation regex:
-    // - Local part: alphanumeric and special chars, can have dots
-    // - @ separator required
-    // - Domain: alphanumeric, hyphens, must have at least one dot
-    // - TLD: at least 2 characters
+    // Regex matches format: local@domain.tld where no spaces/@ in local/domain/tld
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validate @ symbol appears exactly once
+    // Ensure exactly one @ symbol (catches double @ and other edge cases)
     const parts = email.split('@');
     if (parts.length !== 2) {
       return false;
@@ -34,7 +29,7 @@ class EmailValidator {
 
     const [localPart, domain] = parts;
 
-    // Local part validation: must not be empty or start/end with dot
+    // Reject dots at local part boundaries (invalid per spec)
     if (
       !localPart ||
       localPart.length === 0 ||
@@ -44,10 +39,11 @@ class EmailValidator {
       return false;
     }
 
-    // Domain validation: must not be empty or have invalid characters
     if (!domain || domain.length === 0) {
       return false;
     }
+
+    // Reject dots and hyphens at domain boundaries
     if (domain.startsWith('.') || domain.endsWith('.')) {
       return false;
     }
@@ -55,19 +51,17 @@ class EmailValidator {
       return false;
     }
 
-    // Domain must have at least one dot for proper TLD
+    // Domain must have TLD (at least one dot and each part >= 2 chars for TLD)
     const domainParts = domain.split('.');
     if (domainParts.length < 2) {
       return false;
     }
 
-    // TLD must be at least 2 characters
     const tld = domainParts[domainParts.length - 1];
     if (tld.length < 2) {
       return false;
     }
 
-    // Final regex validation
     return emailRegex.test(email);
   }
 

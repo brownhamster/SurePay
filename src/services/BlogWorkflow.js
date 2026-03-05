@@ -28,19 +28,14 @@ class BlogWorkflow {
    * @throws {Error} If user not found or any API call fails
    */
   async validateUserCommentsEmails(username) {
-    // Step 1: Find the user by username
     const user = await this.userRepository.getUserByUsername(username);
-
-    // Step 2: Get all posts created by this user
     const posts = await this.postRepository.getPostsByUserId(user.id);
 
-    // Initialize results structure
     const results = {
       user,
       posts: [],
     };
 
-    // Step 3 & 4: For each post, get comments and validate emails
     for (const post of posts) {
       const comments = await this.commentRepository.getCommentsByPostId(
         post.id

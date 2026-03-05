@@ -19,7 +19,6 @@ class PostRepository {
    * @throws {Error} If userId is invalid or no posts found
    */
   async getPostsByUserId(userId) {
-    // Validate input: must be a positive number
     if (
       userId === null ||
       userId === undefined ||
@@ -29,10 +28,8 @@ class PostRepository {
       throw new Error('Invalid user ID: must be a positive number');
     }
 
-    // Query the API for posts by user ID
     const posts = await this.apiClient.get('/posts', { userId });
 
-    // Check if posts were found
     if (!posts || posts.length === 0) {
       throw new Error(`No posts found for user ID "${userId}"`);
     }
