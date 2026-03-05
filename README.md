@@ -360,6 +360,7 @@ The framework is built with a **framework-agnostic architecture** that allows se
 ## AI Usage Disclosure
 
 This project was developed with assistance from Claude AI. AI support was used for:
+
 - Reviewing and improving test logic and coverage
 - Enhancing code structure and design patterns
 - Improving documentation clarity and completeness
@@ -373,4 +374,3 @@ The core architecture, workflows, and test scenarios were guided by project requ
 - **ARCHITECTURE.md** - Design decisions, patterns, and structure
 - **PROJECT_SUMMARY.md** - Complete project overview and metrics
 - **README.md** - This file
-
