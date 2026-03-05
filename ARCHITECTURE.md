@@ -29,13 +29,18 @@ SurePay/
 │   ├── fixtures/
 │   │   └── test-data.js         # Test data and fixtures (reusable)
 │   │
-│   ├── helpers/
-│   │   └── test-helpers.js      # Test utilities and initialization (reusable)
-│   │
-│   └── setup/                   # (Future) Setup files for different frameworks
+│   └── helpers/
+│       └── test-helpers.js      # Test utilities and initialization (reusable)
 │
+├── .circleci/
+│   └── config.yml               # Circle CI pipeline configuration
+│
+├── .eslintrc.json               # ESLint rules for code quality
+├── .prettierrc                  # Prettier code formatting config
+├── .prettierignore              # Files to ignore formatting
 ├── jest.config.js               # Jest configuration
-└── package.json                 # Dependencies
+├── package.json                 # Dependencies and scripts
+└── .gitignore                   # Git ignore rules
 ```
 
 ## Key Design Decisions
@@ -58,60 +63,31 @@ SurePay/
 - Single responsibility per class
 - Reusable test data and helpers
 
-## How to Extend with Playwright
-
-### Step 1: Create Playwright Tests
-
-```
-tests/
-├── e2e/
-│   └── blog-ui.spec.js  # Playwright tests using same repositories
-```
-
-### Step 2: Reuse Core Logic
-
-```javascript
-// tests/e2e/blog-ui.spec.js
-const testHelpers = require('../helpers/test-helpers');
-const testConfig = require('../config/test-config');
-const { testUsernames } = require('../fixtures/test-data');
-
-test('UI: User can view blog posts', async ({ page }) => {
-  // API setup: reuse same repositories
-  const apiClient = testHelpers.createApiClient(testConfig.api.baseURL);
-  const workflow = testHelpers.createWorkflow(apiClient);
-
-  // UI testing: navigate and validate
-  await page.goto('http://localhost:3000');
-  // ... UI assertions
-});
-```
-
-### Step 3: Install Playwright
-
-```bash
-npm install -D @playwright/test
-```
-
-### Step 4: Run Both Test Suites
-
-```bash
-npm run test:jest      # Jest API tests
-npm run test:playwright # Playwright E2E tests
-npm run test:all       # Both
-```
-
 ## Test Coverage
 
-### API Tests (Jest)
+### API Tests (Jest) - 12 Tests Across 4 Flows
 
-- **Happy Path**: Complete workflow validation
-- **Error Scenarios**: Invalid inputs, missing data
-- **Edge Cases**: Null/undefined, special characters, boundaries
-- **Data Integrity**: Relationship validation
-- **Consistency**: Repeated calls return same data
+**Flow 1: Search for User "Delphine"** (3 tests)
+- Happy path: Find user by username
+- Error: User does not exist
+- Error: Invalid username input
 
-**Total: 74 comprehensive tests**
+**Flow 2: Fetch Posts by User** (3 tests)
+- Happy path: Get all posts for user
+- Error: User has no posts
+- Error: Invalid user ID
+
+**Flow 3: Fetch Comments for Each Post** (3 tests)
+- Happy path: Get comments for posts
+- Error: Post has no comments
+- Error: Invalid post ID
+
+**Flow 4: Validate Email Format in Comments** (3 tests)
+- Happy path: Validate all emails in comments
+- Error: Invalid username in workflow
+- Error: Null username in workflow
+
+**Total: 12 focused tests**
 
 ## Adding New Tests
 
@@ -120,12 +96,6 @@ npm run test:all       # Both
 1. Add test data to `tests/fixtures/test-data.js`
 2. Use test helpers from `tests/helpers/test-helpers.js`
 3. Add test to `tests/api-workflow.test.js`
-
-### For Playwright (UI Tests)
-
-1. Reuse test data from `tests/fixtures/test-data.js`
-2. Reuse initialization from `tests/helpers/test-helpers.js`
-3. Create new `.spec.js` files in `tests/e2e/`
 
 ## Configuration
 
@@ -149,6 +119,27 @@ npm run test:all       # Both
 - `createRepositories()` - Create data access layer
 - `createWorkflow()` - Create business logic
 
+## Code Quality & CI/CD
+
+### ESLint
+- Enforces consistent code style
+- Checks for common errors
+- Rules: 2-space indents, single quotes, strict equality, proper curly braces
+- Run: `npm run lint` or `npm run lint:fix` for auto-fixes
+
+### Prettier
+- Auto-formats code for consistency
+- Enforces formatting rules project-wide
+- Run: `npm run format` or `npm run format:check` to verify
+
+### Circle CI Pipeline
+Automated checks on every push:
+1. **Lint** - `npm run lint`
+2. **Format** - `npm run format:check`
+3. **Test** - `npm test`
+
+All checks must pass before code is considered valid.
+
 ## Benefits
 
 ✅ **DRY** - No code duplication between Jest and Playwright
@@ -157,14 +148,6 @@ npm run test:all       # Both
 ✅ **Maintainable** - Clear separation of concerns
 ✅ **Scalable** - Easy to add more test frameworks later
 ✅ **Framework-agnostic** - Core logic works with any test tool
+✅ **Code Quality** - ESLint and Prettier ensure consistency
+✅ **CI/CD** - Automated validation on every push
 
-## Next Steps for UI Testing
-
-When you're ready to add Playwright:
-
-1. Install `@playwright/test`
-2. Create `tests/e2e/` directory
-3. Import helpers from `tests/helpers/test-helpers.js`
-4. Use test data from `tests/fixtures/test-data.js`
-5. Write page object models or use fixtures for UI patterns
-6. Keep API test setup separate from UI interactions

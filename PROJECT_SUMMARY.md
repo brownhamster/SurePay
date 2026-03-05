@@ -8,7 +8,7 @@ npm install
 npm test
 ```
 
-**Expected Result:** All 19 tests pass in ~3-8 seconds
+**Expected Result:** All 12 tests pass in ~2-5 seconds
 
 ---
 
@@ -23,25 +23,24 @@ npm test
 
 ### ✅ Test Coverage
 
-- **19 comprehensive tests** covering:
-  - Main workflow (happy path)
-  - Error scenarios
-  - Edge cases
-  - Data validation
-  - API integration
+- **12 focused tests** covering 4 required workflows:
+  - Flow 1: Search for user "Delphine"
+  - Flow 2: Fetch posts by user
+  - Flow 3: Fetch comments for posts
+  - Flow 4: Validate email formats in comments
+- Each flow has 1 happy path test + 2 error scenario tests
 
 ### ✅ Test Results
 
-- **19/19 tests PASSING** ✅
-- **81.96% code coverage**
-- **Zero defects found**
+- **12/12 tests PASSING** ✅
+- **Complete workflow validation**
+- **Error handling verified**
 - **Cross-platform compatible**
 
 ### ✅ Documentation
 
 - `README.md` - Setup and usage
-- `TEST_REPORT.md` - Detailed test findings
-- `ARCHITECTURE.md` - Design decisions
+- `ARCHITECTURE.md` - Design decisions and patterns
 - `PROJECT_SUMMARY.md` - This file
 
 ---
@@ -58,13 +57,20 @@ SurePay/
 │   │   └── CommentRepository.js                 # Comment API
 │   ├── services/BlogWorkflow.js                 # Orchestration
 │   └── validators/EmailValidator.js             # Validation
-├── tests/blog-workflow.test.js                  # Test suite
-├── package.json                                 # Dependencies
-├── jest.config.js                               # Jest config
-├── README.md                                    # Setup guide
-├── TEST_REPORT.md                               # Test findings
-├── ARCHITECTURE.md                              # Design docs
-└── .gitignore                                   # Git settings
+├── tests/
+│   ├── api-workflow.test.js                    # Main test suite
+│   ├── config/test-config.js                   # Test configuration
+│   ├── fixtures/test-data.js                   # Test data
+│   └── helpers/test-helpers.js                 # Test utilities
+├── .circleci/config.yml                        # Circle CI configuration
+├── .eslintrc.json                              # ESLint rules
+├── .prettierrc                                 # Prettier formatting
+├── .prettierignore                             # Files to ignore formatting
+├── package.json                                # Dependencies
+├── jest.config.js                              # Jest config
+├── README.md                                   # Setup guide
+├── ARCHITECTURE.md                             # Design docs
+└── .gitignore                                  # Git settings
 ```
 
 ---
@@ -104,39 +110,29 @@ The framework tests this exact flow:
 
 ## Test Coverage Breakdown
 
-### Happy Path Tests (5 tests)
+### Flow 1: Search for User "Delphine" (3 tests)
 
-- ✅ Find user "Delphine"
-- ✅ Retrieve user's posts
-- ✅ Get comments for each post
-- ✅ Execute full workflow
-- ✅ Validate all emails
+- ✅ Find user by username "Delphine"
+- ✅ Error when user does not exist
+- ✅ Error for invalid username input
 
-### Error Handling Tests (4 tests)
+### Flow 2: Fetch Posts by User (3 tests)
 
-- ✅ Handle non-existent user
-- ✅ Handle invalid user ID
-- ✅ Handle empty results
-- ✅ Handle API errors
+- ✅ Fetch all posts for user "Delphine"
+- ✅ Error when user has no posts
+- ✅ Error for invalid user ID
 
-### Unit Tests (3 tests)
+### Flow 3: Fetch Comments for Each Post (3 tests)
 
-- ✅ Email validator with valid formats
-- ✅ Email validator with invalid formats
-- ✅ Email list categorization
+- ✅ Fetch comments for each post
+- ✅ Error when post has no comments
+- ✅ Error for invalid post ID
 
-### Integration Tests (5 tests)
+### Flow 4: Validate Email Format in Comments (3 tests)
 
-- ✅ API client error handling
-- ✅ API timeout handling
-- ✅ Response schema validation (user)
-- ✅ Response schema validation (post)
-- ✅ Response schema validation (comment)
-
-### Data Validation Tests (2 tests)
-
-- ✅ User-post relationship integrity
-- ✅ Post-comment relationship integrity
+- ✅ Validate all comment emails are in proper format
+- ✅ Error for invalid username in workflow
+- ✅ Error for null username in workflow
 
 ---
 
@@ -171,19 +167,20 @@ The framework tests this exact flow:
 ┌────────────────────────────────────────────┐
 │ TEST EXECUTION SUMMARY                     │
 ├────────────────────────────────────────────┤
-│ Total Tests:        19                     │
-│ Passed:             19 ✅                  │
+│ Total Tests:        12                     │
+│ Passed:             12 ✅                  │
 │ Failed:             0 ✅                   │
 │ Skipped:            0                      │
 ├────────────────────────────────────────────┤
-│ Code Coverage:      81.96%                 │
-│ Execution Time:     3-8 seconds            │
+│ Execution Time:     2-5 seconds            │
 │ Defects Found:      0 ✅                   │
 ├────────────────────────────────────────────┤
 │ Platform:           macOS, Linux, Windows  │
 │ Node Version:       14.0.0+                │
 │ Test Framework:     Jest 29.7.0            │
 │ HTTP Client:        Axios 1.6.0            │
+│ Linter:             ESLint 8.54.0          │
+│ Formatter:          Prettier 3.1.0         │
 └────────────────────────────────────────────┘
 ```
 
@@ -197,7 +194,16 @@ The framework tests this exact flow:
 npm install
 ```
 
-### 2. Run Tests
+### 2. Lint and Format Code
+
+```bash
+npm run lint          # Check code style
+npm run lint:fix      # Auto-fix linting issues
+npm run format        # Auto-format code
+npm run format:check  # Check formatting
+```
+
+### 3. Run Tests
 
 ```bash
 npm test              # Run all tests
@@ -205,12 +211,9 @@ npm run test:watch   # Run in watch mode
 npm run test:coverage # Generate coverage report
 ```
 
-### 3. Review Results
+### 4. Review Documentation
 
 ```bash
-# Check TEST_REPORT.md for detailed findings
-cat TEST_REPORT.md
-
 # Check ARCHITECTURE.md for design decisions
 cat ARCHITECTURE.md
 
@@ -252,49 +255,42 @@ cat README.md
 ✅ **Well Documented**
 
 - README with setup instructions
-- TEST_REPORT with findings
-- ARCHITECTURE explaining design
+- ARCHITECTURE explaining design and patterns
 - Clear code comments where needed
+- Project summary with metrics
 
 ---
 
-## Defects Found
+## Quality Assurance
 
 🎯 **Critical Issues:** 0
 🎯 **High Priority Issues:** 0
 🎯 **Medium Priority Issues:** 0
 🎯 **Low Priority Issues:** 0
 
-**Conclusion:** API and email validation working as expected. No defects found.
+✅ **Code Quality:**
+- ESLint: All checks passing
+- Prettier: Code properly formatted
+- Tests: All 12 tests passing
+- No code style violations
+
+**Conclusion:** Framework and API integration working as expected. Code meets quality standards.
 
 ---
 
-## Email Validation Results
+## Email Validation
 
-### Test Data
+The EmailValidator class validates email formats using:
+- Regex pattern validation: `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`
+- Additional checks for domain structure
+- TLD length validation (minimum 2 characters)
+- Proper format validation (no double dots, proper @ placement)
 
-- User: Delphine (ID: 3)
-- Posts: 10
-- Comments: 46
-- All comment emails: ✅ Valid
-
-### Validation Rules Tested
-
-✅ Valid email patterns:
-
-- Basic: `name@domain.com`
-- Subdomain: `user@mail.domain.co.uk`
-- Plus addressing: `user+tag@domain.com`
-- Organization TLD: `info@company.org`
-
-✅ Invalid patterns rejected:
-
-- Missing local part: `@domain.com`
-- Missing domain: `user@`
-- Spaces: `user name@domain.com`
-- Incomplete domain: `user@domain`
-- Null/undefined/empty values
-- Non-string types
+**Test Coverage:**
+- ✅ Valid patterns (basic, subdomains, plus addressing, TLDs)
+- ✅ Invalid patterns (malformed, missing parts, spaces)
+- ✅ Edge cases (null, undefined, non-string types)
+- ✅ Integration with workflow validation
 
 ---
 
@@ -302,15 +298,13 @@ cat README.md
 
 | Category      | Metric         | Value          |
 | ------------- | -------------- | -------------- |
-| **Execution** | Total Time     | 3-8 seconds    |
+| **Execution** | Total Time     | 2-5 seconds    |
 |               | Tests/sec      | ~2.4 tests/sec |
-|               | Average/test   | 0.4 seconds    |
-| **Coverage**  | Statements     | 81.96%         |
-|               | Branches       | 75%            |
-|               | Functions      | 77.77%         |
-|               | Lines          | 81.66%         |
+|               | Average/test   | ~0.3 seconds   |
 | **Quality**   | Defects        | 0              |
 |               | Test Pass Rate | 100%           |
+|               | Linting        | ✅ Pass        |
+|               | Formatting     | ✅ Pass        |
 
 ---
 
@@ -319,6 +313,9 @@ cat README.md
 - **Language:** JavaScript (ES6+)
 - **Test Framework:** Jest 29.7.0
 - **HTTP Client:** Axios 1.6.0
+- **Linter:** ESLint 8.54.0
+- **Formatter:** Prettier 3.1.0
+- **CI/CD:** Circle CI
 - **Runtime:** Node.js 14.0.0+
 - **Platform:** Cross-platform (Windows, macOS, Linux)
 
@@ -333,23 +330,24 @@ cat README.md
 - [x] Proper configuration files
 - [x] Package management
 
-### ✅ Comments Email Validation
+### ✅ Email Validation Workflow
 
 - [x] Fetch user by username
 - [x] Retrieve posts for user
 - [x] Get comments for each post
 - [x] Validate email formats
-- [x] Generate validation results
+- [x] Implement error handling
+- [x] Test all edge cases
 
 ### ✅ Test Scenarios
 
-- [x] Happy path workflow
-- [x] Non-existent user handling
-- [x] Invalid user ID handling
-- [x] Email format validation (various patterns)
-- [x] API error handling
-- [x] Response schema validation
-- [x] Data relationship verification
+- [x] Flow 1: Search for user (happy path + 2 error cases)
+- [x] Flow 2: Fetch posts (happy path + 2 error cases)
+- [x] Flow 3: Fetch comments (happy path + 2 error cases)
+- [x] Flow 4: Validate emails (happy path + 2 error cases)
+- [x] Invalid input handling
+- [x] Error message validation
+- [x] Data structure validation
 
 ### ✅ Best Coding Practices
 
@@ -357,15 +355,18 @@ cat README.md
 - [x] DRY (Don't Repeat Yourself)
 - [x] KISS (Keep It Simple)
 - [x] OOP principles
-- [x] Design patterns
-- [x] Clean code
+- [x] Design patterns (Repository, Dependency Injection)
+- [x] Clean code with consistent style
 - [x] Proper error handling
+- [x] ESLint for code quality
+- [x] Prettier for consistent formatting
+- [x] CI/CD pipeline with Circle CI
 
 ### ✅ Documentation
 
 - [x] README with setup
-- [x] Test report with findings
 - [x] Architecture documentation
+- [x] Project summary
 - [x] Code comments where needed
 - [x] Clear project structure
 
@@ -392,20 +393,30 @@ Developers can now:
 
 ## Files Reference
 
-| File                  | Purpose             | Lines |
-| --------------------- | ------------------- | ----- |
-| ApiClient.js          | HTTP wrapper        | 26    |
-| UserRepository.js     | User data access    | 16    |
-| PostRepository.js     | Post data access    | 24    |
-| CommentRepository.js  | Comment data access | 16    |
-| BlogWorkflow.js       | Orchestration       | 35    |
-| EmailValidator.js     | Email validation    | 27    |
-| blog-workflow.test.js | Test suite          | 350+  |
-| jest.config.js        | Jest config         | 15    |
-| package.json          | Dependencies        | 30    |
-| README.md             | Setup guide         | 200+  |
-| TEST_REPORT.md        | Test findings       | 300+  |
-| ARCHITECTURE.md       | Design docs         | 350+  |
+| File                   | Purpose                    | Type        |
+| ---------------------- | -------------------------- | ----------- |
+| **Source Code**        |                            |             |
+| ApiClient.js           | HTTP wrapper               | src/api     |
+| UserRepository.js      | User data access           | src/repos   |
+| PostRepository.js      | Post data access           | src/repos   |
+| CommentRepository.js   | Comment data access        | src/repos   |
+| BlogWorkflow.js        | Business logic             | src/services|
+| EmailValidator.js      | Email validation           | src/valid   |
+| **Tests**              |                            |             |
+| api-workflow.test.js   | Main test suite (12 tests) | tests       |
+| test-config.js         | Test configuration         | tests/config|
+| test-data.js           | Test fixtures              | tests/fix   |
+| test-helpers.js        | Test utilities             | tests/help  |
+| **Configuration**      |                            |             |
+| .eslintrc.json         | ESLint rules               | config      |
+| .prettierrc             | Prettier formatting        | config      |
+| .circleci/config.yml   | Circle CI pipeline         | config      |
+| jest.config.js         | Jest configuration         | config      |
+| package.json           | Dependencies               | config      |
+| **Documentation**      |                            |             |
+| README.md              | Setup and usage guide      | docs        |
+| ARCHITECTURE.md        | Design decisions           | docs        |
+| PROJECT_SUMMARY.md     | Project overview           | docs        |
 
 ---
 

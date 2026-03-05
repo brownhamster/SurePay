@@ -17,6 +17,9 @@ This framework tests the following workflow:
 - **Language:** JavaScript (ES6+)
 - **Testing Framework:** Jest 29.7.0
 - **HTTP Client:** Axios 1.6.0
+- **Linter:** ESLint 8.54.0
+- **Formatter:** Prettier 3.1.0
+- **CI/CD:** Circle CI
 - **Platform:** Node.js 14.0.0+
 - **OS:** Cross-platform (Windows, macOS, Linux)
 
@@ -36,11 +39,21 @@ SurePay/
 │   └── validators/
 │       └── EmailValidator.js           # Email format validation
 ├── tests/
-│   └── blog-workflow.test.js           # Test suite (19 tests)
+│   ├── api-workflow.test.js            # Test suite (12 tests)
+│   ├── config/
+│   │   └── test-config.js              # Test configuration
+│   ├── fixtures/
+│   │   └── test-data.js                # Test data and fixtures
+│   └── helpers/
+│       └── test-helpers.js             # Test utilities
+├── .circleci/
+│   └── config.yml                       # Circle CI configuration
+├── .eslintrc.json                       # ESLint configuration
+├── .prettierrc                          # Prettier configuration
+├── .prettierignore                      # Prettier ignore rules
 ├── package.json                         # Project dependencies
 ├── jest.config.js                       # Jest configuration
-├── README.md                            # This file
-└── TEST_REPORT.md                       # Detailed test report
+└── README.md                            # This file
 ```
 
 ## Installation
@@ -60,7 +73,7 @@ cd SurePay
 npm install
 ```
 
-## Running Tests
+## Running Tests & Quality Checks
 
 ### Run All Tests
 
@@ -80,69 +93,98 @@ npm run test:watch
 npm run test:coverage
 ```
 
+## Code Quality
+
+### Linting
+
+```bash
+# Check for code style issues
+npm run lint
+
+# Auto-fix linting issues
+npm run lint:fix
+```
+
+### Code Formatting
+
+```bash
+# Auto-format all code
+npm run format
+
+# Check if code matches formatting rules
+npm run format:check
+```
+
+### CI/CD Pipeline
+
+The project uses Circle CI to automatically:
+1. Lint code (`npm run lint`)
+2. Check formatting (`npm run format:check`)
+3. Run tests (`npm test`)
+
+All checks must pass before code is considered valid.
+
 ### Expected Output
 
 ```
-PASS tests/blog-workflow.test.js
+PASS tests/api-workflow.test.js
   Blog Workflow - User Comments Email Validation
-    Happy Path - Complete Workflow
-      ✓ should find user "Delphine" by username
-      ✓ should fetch posts for user "Delphine"
-      ✓ should fetch comments for all posts of user "Delphine"
-      ✓ should validate email format in comments for user "Delphine" posts
-      ✓ all emails in comments should have valid format
-    Error Scenarios - Non-existent User
-      ✓ should throw error when searching for non-existent user
-      ✓ should throw error when user does not exist in workflow
-    ...
+    Flow 1: Search for user "Delphine"
+      ✓ should find user by username "Delphine"
+      ✓ should throw error when user does not exist
+      ✓ should throw error for invalid username input
+    Flow 2: Fetch posts by user
+      ✓ should fetch all posts for user "Delphine"
+      ✓ should throw error when user has no posts
+      ✓ should throw error for invalid user ID
+    Flow 3: Fetch comments for each post
+      ✓ should fetch comments for posts
+      ✓ should throw error when post has no comments
+      ✓ should throw error for invalid post ID
+    Flow 4: Validate email format in comments
+      ✓ should validate that all comment emails are in proper format
+      ✓ should throw error for invalid username in workflow
+      ✓ should throw error for null username in workflow
 
 Test Suites: 1 passed, 1 total
-Tests:       19 passed, 19 total
+Tests:       12 passed, 12 total
 ```
 
 ## Test Coverage
 
-| Metric     | Coverage |
-| ---------- | -------- |
-| Statements | 81.96%   |
-| Branches   | 75%      |
-| Functions  | 77.77%   |
-| Lines      | 81.66%   |
+All 12 tests focus on the 4 required workflows:
 
-**Critical modules at 100% coverage:**
+1. **Flow 1: Search for User** (3 tests)
+   - Happy path: Find user by username
+   - Error handling: Non-existent user
+   - Error handling: Invalid username
 
-- BlogWorkflow.js (100%)
-- EmailValidator.js (100%)
+2. **Flow 2: Fetch Posts** (3 tests)
+   - Happy path: Get posts for user
+   - Error handling: User with no posts
+   - Error handling: Invalid user ID
+
+3. **Flow 3: Fetch Comments** (3 tests)
+   - Happy path: Get comments for posts
+   - Error handling: Post with no comments
+   - Error handling: Invalid post ID
+
+4. **Flow 4: Validate Emails** (3 tests)
+   - Happy path: Validate email formats
+   - Error handling: Invalid username
+   - Error handling: Null username
 
 ## Test Scenarios
 
-### Happy Path (5 tests)
+All tests are organized into 4 main flows with 3 tests each (1 happy path + 2 error scenarios):
 
-- ✅ User lookup by username
-- ✅ Post retrieval for user
-- ✅ Comment retrieval for posts
-- ✅ Email validation workflow
-- ✅ Email format verification
+### Flow-Based Testing Approach
 
-### Error Handling (4 tests)
+Each flow has:
+- **1 Happy Path Test** - Validates the successful workflow
+- **2 Error Scenario Tests** - Tests error handling and edge cases
 
-- ✅ Non-existent user handling
-- ✅ Invalid user ID handling
-- ✅ Empty result sets
-- ✅ Network errors
-
-### Validation & Data Integrity (7 tests)
-
-- ✅ Email format validation (valid & invalid patterns)
-- ✅ API response schema validation
-- ✅ Data relationship verification
-- ✅ Null/undefined handling
-
-### Edge Cases (3 tests)
-
-- ✅ Subdomains in emails
-- ✅ Plus addressing in emails
-- ✅ Multiple TLDs (.com, .org, .co.uk, etc.)
+This ensures complete coverage of both success and failure paths for each workflow component.
 
 ## Architecture & Design Patterns
 
@@ -199,14 +241,16 @@ Invalid formats:
 
 ## Key Features
 
-✅ **Comprehensive Coverage** - 19 tests covering happy path, errors, and edge cases
+✅ **Focused Testing** - 12 tests covering 4 required workflows
 ✅ **Clean Architecture** - Repository pattern, dependency injection, SRP
-✅ **Error Handling** - Robust error messages and timeout handling
-✅ **Data Validation** - Schema and relationship verification
+✅ **Error Handling** - Robust error messages and input validation
+✅ **Code Quality** - ESLint and Prettier ensure consistent style
+✅ **CI/CD Pipeline** - Circle CI automates testing, linting, and formatting
 ✅ **Cross-Platform** - Works on Windows, macOS, Linux
-✅ **No External Config** - Works out of the box
+✅ **No External Config** - Works out of the box with `npm install`
 ✅ **Maintainable** - Clear code structure and test organization
 ✅ **Extensible** - Easy to add new tests and features
+✅ **SOLID Principles** - Well-designed, modular architecture
 
 ## Usage Example
 
@@ -267,48 +311,51 @@ npm test
 
 **Status:** ✅ PASSING
 
-- Total Tests: 19
-- Passed: 19 ✅
+- Total Tests: 12
+- Passed: 12 ✅
 - Failed: 0 ✅
-- Coverage: 81.96%
-- Execution Time: ~8 seconds
+- Execution Time: ~2-5 seconds
 - **Defects Found:** 0
+- **Code Quality:** ✅ ESLint & Prettier Pass
 
 ## Performance Metrics
 
-| Test Group          | Duration | Tests |
-| ------------------- | -------- | ----- |
-| Happy Path          | ~2.4s    | 5     |
-| Error Scenarios     | ~0.5s    | 4     |
-| Email Validator     | ~0.003s  | 3     |
-| API Client          | ~0.45s   | 2     |
-| Response Validation | ~0.27s   | 3     |
-| Data Integrity      | ~1.6s    | 2     |
+| Metric              | Value |
+| ------------------- | ----- |
+| Total Execution     | 2-5s  |
+| Tests/second        | 2.4   |
+| Average per test    | 0.3s  |
+| Code Style Check    | ✅    |
+| Formatting Check    | ✅    |
 
 ## Requirements Met
 
-✅ **Test Automation Framework Skeleton** - Complete, modular structure
-✅ **API Validation** - Email format validation for comments
-✅ **Multiple Scenarios** - Happy path, error cases, edge cases
-✅ **Design Patterns** - Repository, dependency injection, SRP
-✅ **Best Practices** - SOLID, DRY, KISS, OOP principles
-✅ **Clean Code** - Organized, maintainable, well-documented
+✅ **Test Automation Framework Skeleton** - Complete, modular structure with 5 core modules
+✅ **API Validation** - Email format validation for comments across 4 workflows
+✅ **Multiple Scenarios** - Happy path + error cases for each workflow
+✅ **Design Patterns** - Repository, dependency injection, service layer
+✅ **Best Practices** - SOLID, DRY, KISS, OOP principles applied
+✅ **Code Quality** - ESLint & Prettier ensure consistent style
+✅ **CI/CD** - Circle CI automates testing, linting, and formatting
 ✅ **Cross-Platform** - No dependencies on OS-specific features
-✅ **Documentation** - README and detailed test report
+✅ **Documentation** - README, ARCHITECTURE.md, and PROJECT_SUMMARY.md
 ✅ **Zero Configuration** - Run immediately after `npm install`
 
 ## Future Enhancements
 
-- Mock API responses for unit testing
-- Test data builders
+- Playwright E2E tests (framework-agnostic design supports this)
+- Mock API responses for isolated unit tests
+- Test data builders and factories
 - Performance benchmarking
-- Integration test suite
-- Test retry mechanisms
+- Test retry mechanisms for flaky tests
 - Custom Jest reporters
+- Visual regression testing
 
-## Support
+## Documentation
 
-For detailed test report, see [TEST_REPORT.md](./TEST_REPORT.md)
+- **ARCHITECTURE.md** - Design decisions, patterns, and structure
+- **PROJECT_SUMMARY.md** - Complete project overview and metrics
+- **README.md** - This file
 
 ## License
 
