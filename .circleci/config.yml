@@ -1,0 +1,33 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:14
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      - run:
+          name: Run tests
+          command: npm test
+
+      - run:
+          name: Generate test report
+          command: npm test -- --coverage || true
+
+      - store_test_results:
+          path: coverage
+
+      - store_artifacts:
+          path: coverage
+          destination: coverage
+
+workflows:
+  test_workflow:
+    jobs:
+      - test
