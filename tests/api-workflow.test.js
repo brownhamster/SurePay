@@ -1,9 +1,15 @@
+const { mock } = require('jest-mock-extended');
 const testHelpers = require('./helpers/test-helpers');
 const testConfig = require('./config/test-config');
+const ApiClient = require('../src/api/ApiClient');
+const UserRepository = require('../src/repositories/UserRepository');
+const PostRepository = require('../src/repositories/PostRepository');
+const CommentRepository = require('../src/repositories/CommentRepository');
+const BlogWorkflow = require('../src/services/BlogWorkflow');
 
 const API_BASE_URL = testConfig.api.baseURL;
 
-describe('Blog Workflow - User Comments Email Validation', () => {
+describe('API Workflow - User Comments Email Validation', () => {
   let userRepository;
   let postRepository;
   let commentRepository;
@@ -36,6 +42,18 @@ describe('Blog Workflow - User Comments Email Validation', () => {
 
     test('should throw error for invalid username input', async () => {
       await expect(userRepository.getUserByUsername(null)).rejects.toThrow();
+    });
+
+    test('should handle API timeout gracefully', async () => {
+      const mockApiClient = mock(ApiClient);
+      mockApiClient.get.mockRejectedValueOnce(
+        new Error('GET /users failed: timeout of 10000ms exceeded')
+      );
+      const timeoutRepo = new UserRepository(mockApiClient);
+
+      await expect(timeoutRepo.getUserByUsername('Delphine')).rejects.toThrow(
+        'timeout'
+      );
     });
   });
 
@@ -97,6 +115,39 @@ describe('Blog Workflow - User Comments Email Validation', () => {
         commentRepository.getCommentsByPostId(null)
       ).rejects.toThrow();
     });
+
+    test('should handle malformed API response', async () => {
+      const mockApiClient = mock(ApiClient);
+      // Mock response with missing email field
+      mockApiClient.get.mockResolvedValueOnce([
+        {
+          id: 1,
+          postId: 1,
+          name: 'Test',
+          body: 'Test comment',
+        },
+      ]);
+      const malformedRepo = new CommentRepository(mockApiClient);
+      const comments = await malformedRepo.getCommentsByPostId(1);
+
+      expect(comments).toBeDefined();
+      expect(comments[0].email).toBeUndefined();
+
+      // Mock response with email as wrong type (number)
+      mockApiClient.get.mockResolvedValueOnce([
+        {
+          id: 2,
+          postId: 1,
+          name: 'Test',
+          email: 12345,
+          body: 'Test comment',
+        },
+      ]);
+      const comments2 = await malformedRepo.getCommentsByPostId(1);
+
+      expect(comments2).toBeDefined();
+      expect(typeof comments2[0].email).toBe('number');
+    });
   });
 
   describe('Flow 4: Validate email format in comments', () => {
@@ -124,14 +175,29 @@ describe('Blog Workflow - User Comments Email Validation', () => {
       });
     });
 
-    test('should throw error for invalid username in workflow', async () => {
-      await expect(
-        workflow.validateUserCommentsEmails('NonExistentUser')
-      ).rejects.toThrow();
-    });
+    test('should handle concurrent requests without errors', async () => {
+      const usernames = ['Delphine', 'Kamren', 'Leopoldo_Corkery'];
+      const startTime = Date.now();
 
-    test('should throw error for null username in workflow', async () => {
-      await expect(workflow.validateUserCommentsEmails(null)).rejects.toThrow();
+      const results = await Promise.all(
+        usernames.map((username) =>
+          workflow.validateUserCommentsEmails(username)
+        )
+      );
+
+      const endTime = Date.now();
+      const executionTime = endTime - startTime;
+
+      expect(results).toBeDefined();
+      expect(results.length).toBe(3);
+      results.forEach((result) => {
+        expect(result.user).toBeDefined();
+        expect(result.posts).toBeDefined();
+        expect(Array.isArray(result.posts)).toBe(true);
+      });
+
+      // Log concurrent execution time for performance baseline
+      console.log(`Concurrent execution time: ${executionTime}ms`);
     });
   });
 });

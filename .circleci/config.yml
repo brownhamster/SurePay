@@ -24,6 +24,10 @@ jobs:
           name: Run tests
           command: npm test
 
+      - store_artifacts:
+          path: reports
+          destination: test-reports
+
 workflows:
   test_workflow:
     jobs:

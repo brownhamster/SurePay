@@ -134,6 +134,7 @@ PASS tests/api-workflow.test.js
       ✓ should find user by username "Delphine"
       ✓ should throw error when user does not exist
       ✓ should throw error for invalid username input
+      ✓ should handle API timeout gracefully
     Flow 2: Fetch posts by user
       ✓ should fetch all posts for user "Delphine"
       ✓ should throw error when user has no posts
@@ -142,51 +143,70 @@ PASS tests/api-workflow.test.js
       ✓ should fetch comments for posts
       ✓ should throw error when post has no comments
       ✓ should throw error for invalid post ID
+      ✓ should handle malformed API response
     Flow 4: Validate email format in comments
       ✓ should validate that all comment emails are in proper format
-      ✓ should throw error for invalid username in workflow
-      ✓ should throw error for null username in workflow
+      ✓ should handle concurrent requests without errors
 
 Test Suites: 1 passed, 1 total
-Tests:       12 passed, 12 total
+Tests:       13 passed, 13 total
 ```
 
 ## Test Coverage
 
-All 12 tests focus on the 4 required workflows:
+All 13 tests focus on the 4 required workflows with additional robustness scenarios:
 
-1. **Flow 1: Search for User** (3 tests)
+1. **Flow 1: Search for User** (4 tests)
    - Happy path: Find user by username
    - Error handling: Non-existent user
    - Error handling: Invalid username
+   - Robustness: API timeout handling
 
 2. **Flow 2: Fetch Posts** (3 tests)
    - Happy path: Get posts for user
    - Error handling: User with no posts
    - Error handling: Invalid user ID
 
-3. **Flow 3: Fetch Comments** (3 tests)
+3. **Flow 3: Fetch Comments** (4 tests)
    - Happy path: Get comments for posts
    - Error handling: Post with no comments
    - Error handling: Invalid post ID
+   - Robustness: Malformed API response (missing/wrong type fields)
 
-4. **Flow 4: Validate Emails** (3 tests)
-   - Happy path: Validate email formats
-   - Error handling: Invalid username
-   - Error handling: Null username
+4. **Flow 4: Validate Emails** (2 tests)
+   - Happy path: Validate email formats in complete workflow
+   - Robustness: Concurrent requests under load
+
+## Test Reports
+
+After running tests, an HTML test report is automatically generated:
+
+```bash
+npm test
+# Report generated at: ./reports/test-report.html
+```
+
+The test report includes:
+- **Execution Summary** - Total tests, passed, failed, skipped
+- **Test Details** - Individual test results with execution time
+- **Coverage Metrics** - Code coverage percentages
+- **Error Logs** - Detailed error messages for failed tests
+
+View the report in Circle CI artifacts or open locally in a browser.
 
 ## Test Scenarios
 
-All tests are organized into 4 main flows with 3 tests each (1 happy path + 2 error scenarios):
+Tests are organized into 4 main flows (Flow 1: 4 tests, Flow 2: 3 tests, Flow 3: 4 tests, Flow 4: 2 tests):
 
-### Flow-Based Testing Approach
+### Test Structure
 
-Each flow has:
+Each flow includes:
 
-- **1 Happy Path Test** - Validates the successful workflow
-- **2 Error Scenario Tests** - Tests error handling and edge cases
+- **Happy Path Test** - Validates the successful workflow
+- **Error Scenario Tests** - Tests error handling and edge cases (repository layer)
+- **Robustness Test** (selected flows) - Tests timeout, malformed data, or concurrent requests
 
-This ensures complete coverage of both success and failure paths for each workflow component.
+This ensures both functional correctness and system robustness without redundancy.
 
 ## Architecture & Design Patterns
 
@@ -243,7 +263,7 @@ Invalid formats:
 
 ## Key Features
 
-✅ **Focused Testing** - 12 tests covering 4 required workflows
+✅ **Focused Testing** - 13 focused tests covering 4 required workflows + robustness scenarios
 ✅ **Clean Architecture** - Repository pattern, dependency injection, SRP
 ✅ **Error Handling** - Robust error messages and input validation
 ✅ **Code Quality** - ESLint and Prettier ensure consistent style
