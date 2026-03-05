@@ -13,7 +13,9 @@ class EmailValidator {
 
     // Additional validation to ensure proper format
     const parts = email.split('@');
-    if (parts.length !== 2) return false;
+    if (parts.length !== 2) {
+      return false;
+    }
 
     const [localPart, domain] = parts;
 
@@ -23,17 +25,27 @@ class EmailValidator {
     }
 
     // Domain validation
-    if (!domain || domain.length === 0) return false;
-    if (domain.startsWith('.') || domain.endsWith('.')) return false;
-    if (domain.startsWith('-') || domain.endsWith('-')) return false;
+    if (!domain || domain.length === 0) {
+      return false;
+    }
+    if (domain.startsWith('.') || domain.endsWith('.')) {
+      return false;
+    }
+    if (domain.startsWith('-') || domain.endsWith('-')) {
+      return false;
+    }
 
     // Must have at least one dot in domain and proper TLD
     const domainParts = domain.split('.');
-    if (domainParts.length < 2) return false;
+    if (domainParts.length < 2) {
+      return false;
+    }
 
     // TLD must be at least 2 characters and not be a dot
     const tld = domainParts[domainParts.length - 1];
-    if (tld.length < 2) return false;
+    if (tld.length < 2) {
+      return false;
+    }
 
     return emailRegex.test(email);
   }
